@@ -4,6 +4,9 @@ using System.Text;
 
 namespace CurrieTechnologies.Blazor.PageVisibility
 {
+    /// <summary>
+    /// Holds all visibility information from the browser.
+    /// </summary>
     public class VisibilityInfo
     {
         public bool Hidden { get; set; }
