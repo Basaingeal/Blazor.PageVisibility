@@ -17,7 +17,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <PackageProjectUrl>https://github.com/Basaingeal/Blazor.PageVisibility</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     
