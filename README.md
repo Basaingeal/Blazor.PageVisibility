@@ -37,7 +37,7 @@ This package provides Blazor applications with access to the browser's [Page Vis
       }
       else
       {
-        <button onclick="@(async () => listenerId = await visibility.OnVisibilityChangeAsync(OnVisibilityChange))">
+        <button onclick="@(async () => listenerId = await visibility.OnVisibilityChangeAsync(OnVisibilityChange, this))">
           Resubscribe
         </button>
       }
@@ -52,7 +52,7 @@ This package provides Blazor applications with access to the browser's [Page Vis
       {
         viewStates.Add(await visibility.GetVisibilityStateAsync());
 
-        listenerId = await visibility.OnVisibilityChangeAsync(OnVisibilityChange);
+        listenerId = await visibility.OnVisibilityChangeAsync(OnVisibilityChange, this);
 
         await base.OnInitAsync();
       }
@@ -60,7 +60,6 @@ This package provides Blazor applications with access to the browser's [Page Vis
       Task OnVisibilityChange(VisibilityInfo visibilityInfo)
       {
         viewStates.Add(visibilityInfo.VisibilityState);
-        StateHasChanged();
         return Task.CompletedTask;
       }
 
