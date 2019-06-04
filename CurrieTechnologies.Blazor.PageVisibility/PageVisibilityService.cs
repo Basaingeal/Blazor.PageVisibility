@@ -17,8 +17,8 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         static readonly IDictionary<Guid, TaskCompletionSource<object>> pendingRemoveVisibilityChangeCallbackRequests =
            new Dictionary<Guid, TaskCompletionSource<object>>();
 
-        static readonly IDictionary<Guid, Func<VisibilityInfo, Task>> visibilityChangeCallbacks =
-           new Dictionary<Guid, Func<VisibilityInfo, Task>>();
+        static readonly IDictionary<Guid, EventCallback<VisibilityInfo>> visibilityChangeCallbacks =
+           new Dictionary<Guid, EventCallback<VisibilityInfo>>();
 
         public PageVisibilityService(IJSRuntime jSRuntime)
         {
@@ -44,6 +44,7 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         {
             var requestGuid = Guid.Parse(requestId);
             var pendingTask = pendingHiddenRequests.First(x => x.Key == requestGuid).Value;
+            pendingHiddenRequests.Remove(requestGuid);
             pendingTask.SetResult(hidden);
         }
 
@@ -67,22 +68,41 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         {
             var requestGuid = Guid.Parse(requestId);
             var pendingTask = pendingVisibilityStateRequests.First(x => x.Key == requestGuid).Value;
+            pendingVisibilityStateRequests.Remove(requestGuid);
             pendingTask.SetResult(visibiltyState);
         }
 
         /// <summary>
         /// An EventListener providing the code to be called when the visibilitychange event is fired.
         /// </summary>
-        /// <param name="visibilityCallback"></param>
-        /// <returns>A GUID that can be used to clear the event callback</returns>
-        public async Task<Guid> OnVisibilityChangeAsync(Func<VisibilityInfo, Task> visibilityCallback)
+        /// <param name="visibilityCallback">The action to perform when the visibility changes.</param>
+        /// <param name="callingComponent">Pass in 'this' from the calling component.</param>
+        /// <returns>A GUID that can be used to clear the event callback.</returns>
+        public async Task<Guid> OnVisibilityChangeAsync(Func<VisibilityInfo, Task> visibilityCallback, object callingComponent)
+        {
+            EventCallback<VisibilityInfo> eventCallback = EventCallback.Factory.Create(callingComponent, visibilityCallback);
+            return await AttachCallbackToDomAsync(eventCallback);
+        }
+
+        /// <summary>
+        /// An EventListener providing the code to be called when the visibilitychange event is fired.
+        /// </summary>
+        /// <param name="visibilityCallback">The action to perform when the visibility changes.</param>
+        /// <param name="callingComponent">Pass in 'this' from the calling component.</param>
+        /// <returns>A GUID that can be used to clear the event callback.</returns>
+        public async Task<Guid> OnVisibilityChangeAsync(Action<VisibilityInfo> visibilityCallback, object callingComponent)
+        {
+            EventCallback<VisibilityInfo> eventCallback = EventCallback.Factory.Create(callingComponent, visibilityCallback);
+            return await AttachCallbackToDomAsync(eventCallback);
+        }
+
+        private async Task<Guid> AttachCallbackToDomAsync(EventCallback<VisibilityInfo> eventCallback)
         {
             var actionId = Guid.NewGuid();
-            visibilityChangeCallbacks.Add(actionId, visibilityCallback);
+            visibilityChangeCallbacks.Add(actionId, eventCallback);
             await jSRuntime.InvokeAsync<string>("CurrieTechnologies.Blazor.PageVisibility.OnVisibilityChange", actionId);
             return actionId;
         }
-
 
         [JSInvokable]
         public static async Task ReceiveVisibiliyChange(string id, bool hidden, string visibilityState)
@@ -98,13 +118,13 @@ namespace CurrieTechnologies.Blazor.PageVisibility
                 Hidden = hidden,
                 VisibilityState = visibilityState
             };
-            await action(visibilityInfo);
+            await action.InvokeAsync(visibilityInfo);
         }
 
         /// <summary>
         /// Removes a callback set with OnVisibilityChangeAsync.
         /// </summary>
-        /// <param name="callbackId">The GUID of the callback obtained when setting the listener</param>
+        /// <param name="callbackId">The GUID of the callback obtained when setting the listener.</param>
         /// <returns></returns>
         public async Task RemoveVisibilityChangeCallbackAsync(Guid callbackId)
         {
@@ -123,7 +143,7 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         /// <summary>
         /// Removes a callback set with OnVisibilityChangeAsync.
         /// </summary>
-        /// <param name="callbackId">The GUID of the callback obtained when setting the listener</param>
+        /// <param name="callbackId">The GUID of the callback obtained when setting the listener.</param>
         /// <returns></returns>
         public Task RemoveVisibilityChangeCallbackAsync(string callbackId)
         {
@@ -136,6 +156,7 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         {
             var actionIdGuid = Guid.Parse(actionId);
             var pendingTask = pendingRemoveVisibilityChangeCallbackRequests.First(x => x.Key == actionIdGuid).Value;
+            pendingRemoveVisibilityChangeCallbackRequests.Remove(actionIdGuid);
             pendingTask.SetResult(null);
         }
     }
