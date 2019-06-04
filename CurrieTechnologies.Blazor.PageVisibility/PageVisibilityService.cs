@@ -88,7 +88,7 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         public static async Task ReceiveVisibiliyChange(string id, bool hidden, string visibilityState)
         {
             var actionId = Guid.Parse(id);
-            if (!visibilityChangeCallbacks.Keys.Contains(actionId))
+            if (!visibilityChangeCallbacks.ContainsKey(actionId))
             {
                 return;
             }
