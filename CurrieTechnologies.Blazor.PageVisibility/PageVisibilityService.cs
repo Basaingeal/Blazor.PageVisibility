@@ -17,8 +17,8 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         static readonly IDictionary<Guid, TaskCompletionSource<object>> pendingRemoveVisibilityChangeCallbackRequests =
            new Dictionary<Guid, TaskCompletionSource<object>>();
 
-        static readonly IDictionary<Guid, EventCallback<VisibilityInfo>> visibilityChangeCallbacks =
-           new Dictionary<Guid, EventCallback<VisibilityInfo>>();
+        static readonly IDictionary<Guid, Func<VisibilityInfo, Task>> visibilityChangeCallbacks =
+           new Dictionary<Guid, Func<VisibilityInfo, Task>>();
 
         public PageVisibilityService(IJSRuntime jSRuntime)
         {
@@ -75,13 +75,14 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         /// </summary>
         /// <param name="visibilityCallback"></param>
         /// <returns>A GUID that can be used to clear the event callback</returns>
-        public async Task<Guid> OnVisibilityChangeAsync(EventCallback<VisibilityInfo> visibilityCallback)
+        public async Task<Guid> OnVisibilityChangeAsync(Func<VisibilityInfo, Task> visibilityCallback)
         {
             var actionId = Guid.NewGuid();
             visibilityChangeCallbacks.Add(actionId, visibilityCallback);
             await jSRuntime.InvokeAsync<string>("CurrieTechnologies.Blazor.PageVisibility.OnVisibilityChange", actionId);
             return actionId;
         }
+
 
         [JSInvokable]
         public static async Task ReceiveVisibiliyChange(string id, bool hidden, string visibilityState)
@@ -97,7 +98,7 @@ namespace CurrieTechnologies.Blazor.PageVisibility
                 Hidden = hidden,
                 VisibilityState = visibilityState
             };
-            await action.InvokeAsync(visibilityInfo);
+            await action(visibilityInfo);
         }
 
         /// <summary>
