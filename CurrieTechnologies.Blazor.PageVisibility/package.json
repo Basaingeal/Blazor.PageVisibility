@@ -1,6 +1,6 @@
 {
   "name": "currietechnologies-blazorpagevisibility",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A Blazor JSInterop library for interacting with the browser visibility API",
   "scripts": {
     "build": "tsc"

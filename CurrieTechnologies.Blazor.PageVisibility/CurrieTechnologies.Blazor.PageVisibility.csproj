@@ -17,11 +17,21 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <PackageProjectUrl>https://github.com/Basaingeal/Blazor.PageVisibility</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     
     <DefaultItemExcludes>${DefaultItemExcludes};node_modules\**</DefaultItemExcludes>
+    
+    <Authors>Michael J. Currie</Authors>
+    
+    <Company>Currie Technologies</Company>
+    
+    <RepositoryUrl>https://github.com/Basaingeal/Blazor.PageVisibility</RepositoryUrl>
+    
+    <PackageReleaseNotes>Reduced overhead for synchronous javascript calls.</PackageReleaseNotes>
+    
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
