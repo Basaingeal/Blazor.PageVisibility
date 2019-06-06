@@ -10,10 +10,6 @@ namespace CurrieTechnologies.Blazor.PageVisibility
     public class PageVisibilityService
     {
         private readonly IJSRuntime jSRuntime;
-        static readonly IDictionary<Guid, TaskCompletionSource<bool>> pendingHiddenRequests =
-           new Dictionary<Guid, TaskCompletionSource<bool>>();
-        static readonly IDictionary<Guid, TaskCompletionSource<string>> pendingVisibilityStateRequests =
-           new Dictionary<Guid, TaskCompletionSource<string>>();
         static readonly IDictionary<Guid, TaskCompletionSource<object>> pendingRemoveVisibilityChangeCallbackRequests =
            new Dictionary<Guid, TaskCompletionSource<object>>();
 
@@ -31,21 +27,13 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         /// <returns></returns>
         public async Task<bool> IsHiddenAsync()
         {
-            var tcs = new TaskCompletionSource<bool>();
-            var requestId = Guid.NewGuid();
-            pendingHiddenRequests.Add(requestId, tcs);
-            await jSRuntime.InvokeAsync<string>("CurrieTechnologies.Blazor.PageVisibility.IsHidden", requestId);
+            var result = await jSRuntime.InvokeAsync<bool?>("CurrieTechnologies.Blazor.PageVisibility.IsHidden");
+            if(result == null)
+            {
+                throw new JSException("Visibility not supported");
+            }
 
-            return await tcs.Task;
-        }
-
-        [JSInvokable]
-        public static void ReceiveHiddenResponse(string requestId, bool hidden)
-        {
-            var requestGuid = Guid.Parse(requestId);
-            var pendingTask = pendingHiddenRequests.First(x => x.Key == requestGuid).Value;
-            pendingHiddenRequests.Remove(requestGuid);
-            pendingTask.SetResult(hidden);
+            return result.Value;
         }
 
         /// <summary>
@@ -55,21 +43,13 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         /// <returns></returns>
         public async Task<string> GetVisibilityStateAsync()
         {
-            var tcs = new TaskCompletionSource<string>();
-            var requestId = Guid.NewGuid();
-            pendingVisibilityStateRequests.Add(requestId, tcs);
-            await jSRuntime.InvokeAsync<string>("CurrieTechnologies.Blazor.PageVisibility.GetVisibilityState", requestId);
+           var result = await jSRuntime.InvokeAsync<string>("CurrieTechnologies.Blazor.PageVisibility.GetVisibilityState");
+            if (result == null)
+            {
+                throw new JSException("Visibility not supported");
+            }
 
-            return await tcs.Task;
-        }
-
-        [JSInvokable]
-        public static void ReceiveVisibilityStateResponse(string requestId, string visibiltyState)
-        {
-            var requestGuid = Guid.Parse(requestId);
-            var pendingTask = pendingVisibilityStateRequests.First(x => x.Key == requestGuid).Value;
-            pendingVisibilityStateRequests.Remove(requestGuid);
-            pendingTask.SetResult(visibiltyState);
+            return result;
         }
 
         /// <summary>
