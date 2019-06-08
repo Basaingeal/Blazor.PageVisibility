@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CurrieTechnologies.Blazor.PageVisibility
+﻿namespace CurrieTechnologies.Blazor.PageVisibility
 {
     /// <summary>
     /// A DOMString indicating the document's current visibility state

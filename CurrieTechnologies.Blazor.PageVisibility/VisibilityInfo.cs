@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CurrieTechnologies.Blazor.PageVisibility
+﻿namespace CurrieTechnologies.Blazor.PageVisibility
 {
     /// <summary>
     /// Holds all visibility information from the browser.

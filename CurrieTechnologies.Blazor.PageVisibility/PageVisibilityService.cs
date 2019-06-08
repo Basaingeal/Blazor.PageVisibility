@@ -28,7 +28,7 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         public async Task<bool> IsHiddenAsync()
         {
             var result = await jSRuntime.InvokeAsync<bool?>("CurrieTechnologies.Blazor.PageVisibility.IsHidden");
-            if(result == null)
+            if (result == null)
             {
                 throw new JSException("Visibility not supported");
             }
@@ -43,7 +43,7 @@ namespace CurrieTechnologies.Blazor.PageVisibility
         /// <returns></returns>
         public async Task<string> GetVisibilityStateAsync()
         {
-           var result = await jSRuntime.InvokeAsync<string>("CurrieTechnologies.Blazor.PageVisibility.GetVisibilityState");
+            var result = await jSRuntime.InvokeAsync<string>("CurrieTechnologies.Blazor.PageVisibility.GetVisibilityState");
             if (result == null)
             {
                 throw new JSException("Visibility not supported");
