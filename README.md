@@ -14,7 +14,7 @@ This package provides Blazor applications with access to the browser's [Page Vis
     public void ConfigureServices(IServiceCollection services)
     {
         ...
-        services.AddSingleton<PageVisibilityService>();
+        services.AddPageVisibility();
         ...
     }
     ```
