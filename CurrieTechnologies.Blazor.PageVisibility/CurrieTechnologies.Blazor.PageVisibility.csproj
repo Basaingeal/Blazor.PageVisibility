@@ -17,7 +17,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 
-    <Version>0.2.1</Version>
+    <Version>0.2.2</Version>
     <PackageProjectUrl>https://github.com/Basaingeal/Blazor.PageVisibility</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     
@@ -29,9 +29,11 @@
     
     <RepositoryUrl>https://github.com/Basaingeal/Blazor.PageVisibility</RepositoryUrl>
     
-    <PackageReleaseNotes>Reduced overhead for synchronous javascript calls.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add DI method to use in startup: services.AddPageVisibility()</PackageReleaseNotes>
     
     <RepositoryType>git</RepositoryType>
+    
+    <Product>Blazor.PageVisibility</Product>
   </PropertyGroup>
 
   <ItemGroup>
