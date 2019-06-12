@@ -33,18 +33,18 @@ This package provides Blazor applications with access to the browser's [Page Vis
       </ul>
       @if (listenerId != Guid.Empty)
       {
-        <button onclick="@HandleUnsubscibe">Unsubscribe</button>
+        <button @onclick="@HandleUnsubscibe">Unsubscribe</button>
       }
       else
       {
-        <button onclick="@(async () => listenerId = await visibility.OnVisibilityChangeAsync(OnVisibilityChange, this))">
+        <button @onclick="@(async () => listenerId = await visibility.OnVisibilityChangeAsync(OnVisibilityChange, this))">
           Resubscribe
         </button>
       }
 
     </div>
 
-    @functions {
+    @code {
       private List<string> viewStates = new List<string>();
       private Guid listenerId = Guid.Empty;
 
