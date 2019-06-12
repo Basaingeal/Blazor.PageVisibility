@@ -17,7 +17,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 
-    <Version>0.2.2</Version>
+    <Version>0.3.0</Version>
     <PackageProjectUrl>https://github.com/Basaingeal/Blazor.PageVisibility</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     
@@ -29,11 +29,13 @@
     
     <RepositoryUrl>https://github.com/Basaingeal/Blazor.PageVisibility</RepositoryUrl>
     
-    <PackageReleaseNotes>Add DI method to use in startup: services.AddPageVisibility()</PackageReleaseNotes>
+    <PackageReleaseNotes>Update to latest Microsoft.AspNetCore.Components.Browser preview version</PackageReleaseNotes>
     
     <RepositoryType>git</RepositoryType>
     
     <Product>Blazor.PageVisibility</Product>
+    
+    <PackageIconUrl>https://currietechnologyimages.blob.core.windows.net/logos/transparent_Logo_128.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -44,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview5-19227-01" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Browser" Version="3.0.0-preview6.19307.2" />
   </ItemGroup>
 
   <ItemGroup>
