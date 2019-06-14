@@ -31,16 +31,6 @@ function visibilityCallbackFactory(actionId: string) {
     );
 }
 
-function dispatchRemoveVisibilityChangeCallbackResponse(
-  actionId: string,
-): Promise<void> {
-  return DotNet.invokeMethodAsync(
-    namespace,
-    "ReceiveRemoveVisibilityChangeCallbackResponse",
-    actionId,
-  );
-}
-
 domWindow.CurrieTechnologies = domWindow.CurrieTechnologies || {};
 domWindow.CurrieTechnologies.Blazor = domWindow.CurrieTechnologies.Blazor || {};
 domWindow.CurrieTechnologies.Blazor.PageVisibility =
@@ -68,5 +58,4 @@ domWindow.CurrieTechnologies.Blazor.PageVisibility.RemoveVisibilityChangeCallbac
   const callback = visibilityCallbacks.get(actionId) as () => Promise<void>;
   document.removeEventListener("visibilitychange", callback);
   visibilityCallbacks.delete(actionId);
-  dispatchRemoveVisibilityChangeCallbackResponse(actionId);
 };

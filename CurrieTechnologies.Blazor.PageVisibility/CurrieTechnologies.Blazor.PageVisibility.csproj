@@ -36,7 +36,7 @@ Use in Client-side Blazor apps.</Description>
     
     <Product>Blazor.PageVisibility</Product>
     
-    <PackageIconUrl>https://currietechnologyimages.blob.core.windows.net/logos/transparent_Logo_128.png</PackageIconUrl>
+    <PackageIconUrl>https://currietechnologyimages.blob.core.windows.net/logos/logo_v2_128.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
