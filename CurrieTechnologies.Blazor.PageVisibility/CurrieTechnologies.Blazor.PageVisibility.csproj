@@ -3,8 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>Michael J. Currie</Copyright>
-    <Description>A Blazor JSInterop library for interacting with the browser visibility API</Description>
-    <PackageTags>Blazor Page Visibility</PackageTags>
+    <Description>A Blazor component library for interacting with the browser visibility API
+Use in Client-side Blazor apps.</Description>
+    <PackageTags>Blazor Page Visibility PageVisibility</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyName>CurrieTechnologies.Blazor.PageVisibility</AssemblyName>
     <RootNamespace>CurrieTechnologies.Blazor.PageVisibility</RootNamespace>
@@ -17,7 +18,7 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 
-    <Version>0.3.1</Version>
+    <Version>0.3.2</Version>
     <PackageProjectUrl>https://github.com/Basaingeal/Blazor.PageVisibility</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     
@@ -29,7 +30,7 @@
     
     <RepositoryUrl>https://github.com/Basaingeal/Blazor.PageVisibility</RepositoryUrl>
     
-    <PackageReleaseNotes>remove dev files from nuget package content</PackageReleaseNotes>
+    <PackageReleaseNotes>Fix typo in DI method.</PackageReleaseNotes>
     
     <RepositoryType>git</RepositoryType>
     

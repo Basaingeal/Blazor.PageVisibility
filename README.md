@@ -1,6 +1,8 @@
 # CurrieTechnologies.Blazor.PageVisibility
 This package provides Blazor applications with access to the browser's [Page Visibility API](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API)
 
+## This package is for Client-side Blazor only. For Server-side Blazor use [CurrieTechnologies.Razor.PageVisibility](https://github.com/Basaingeal/Razor.PageVisibility)
+
 ## Usage
 1) In your Blazor app, add the `CurrieTechnologies.Blazor.PageVisibility` [NuGet package](https://www.nuget.org/packages/CurrieTechnologies.Blazor.PageVisibility/)
 
